@@ -165,6 +165,40 @@
                     </div>
             </div>
 		</div>
+ <!-- maintenance -->
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box box-primary">
+
+					<div class="box-header with-border">
+						<h3 class="box-title">MAINTENANCE</h3>
+					</div>
+
+					<div class="box-body">
+						<div style="padding-bottom: 10px;"'>
+							<button class="btn btn-danger btn-sm btn-modal" type="button"><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+							<?php echo anchor(site_url('item_transaction/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?></div>
+							<table class="table table-bordered table-striped" width="100%" id="mytable">
+								<thead>
+									<tr>
+										<th width="30px">No</th>
+										<th>Date</th>
+										<th>Responsible Person</th>
+										<th>Departmen</th>
+										<th>Location</th>
+										<th>Porpuse</th>
+										<th>Condition</th>
+										<th>Remark</th>
+										<th width="200px">Action</th>
+									</tr>
+								</thead>
+							
+							</table>
+       					 </div>
+                    </div>
+            </div>
+		</div>
+
 	</section>
 </div>
 
