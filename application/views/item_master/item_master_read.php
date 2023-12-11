@@ -307,9 +307,9 @@
 					</div>
 				</div>
 				<div class='form-group'>
-					<label for='inputEmail3' class='col-sm-4 control-label'>Lab team PIC</label>
+					<label for='inputEmail3' class='col-sm-4 control-label'>PIC</label>
 					<div class='col-sm-8' style="margin-bottom:10px;">
-						<?php echo select2_dinamis('staff_id','staff','name','Lab team PIC','id'); ?>
+						<?php echo select2_dinamis('staff_id','staff','name','PIC','id'); ?>
 					</div>
 				</div>
 				<div class='form-group'>
