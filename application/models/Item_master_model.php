@@ -74,6 +74,7 @@ class Item_master_model extends CI_Model
             return  "RISE-$ct_id/$years/$cat_name-" . sprintf("%03d", $count);
        
     }    
+    
     function json() {
         $this->datatables->select('item_master.inventory_number,description,item_master.name,type,serial_number,item_master.category_id,
                     sub_category_id, item_master.fund_id,item_master.manufacture_id,item_master.supplier_id, item_master.scheduled,

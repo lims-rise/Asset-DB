@@ -26,6 +26,11 @@ class Item_transaction extends CI_Controller
         echo $this->Item_transaction_model->json($id);
     }
 
+    public function json2() {
+        $id = $this->input->post('id', TRUE);
+        header('Content-Type: application/json');
+        echo $this->Item_transaction_model->json2($id);
+    }
 
     public function read($id) 
     {
@@ -133,6 +138,36 @@ class Item_transaction extends CI_Controller
             echo json_encode(array('massage' => 'Data Saved'));
         }
     }
+  
+    public function action2() 
+    {
+        // $this->_rules2();
+
+        // if ($this->form_validation->run() == FALSE) {
+        //     $this->create();
+        // } else {
+            $data = array(
+                'inventory_number' => $this->input->post('inventory_number',TRUE),
+                'last_service_date' => $this->input->post('last_service_date',TRUE),
+                'id_services' => $this->input->post('id_services',TRUE),
+                'provider_contact' => $this->input->post('provider_contact',TRUE),
+                'id_staff' => $this->input->post('staff_id',TRUE),
+                'service_desc' => $this->input->post('service_desc',TRUE),
+                'id_frequency' => $this->input->post('id_frequency',TRUE),
+                'service_schedule' => $this->input->post('service_schedule',TRUE),
+                'status' => 1,
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_by' => $this->session->userdata('id_users'),
+            );
+            $id = $this->input->post('id_maintenance',TRUE);
+            if($id != '')
+                $this->Item_transaction_model->update2($id,$data);
+            else
+                $this->Item_transaction_model->insert2($data);
+
+            echo json_encode(array('massage' => 'Data Saved'));
+        // }
+    }    
     
     public function update($id) 
     {
@@ -210,6 +245,25 @@ class Item_transaction extends CI_Controller
         echo json_encode($data);
     }
 
+    public function delete2() 
+    {
+        $id = $this->input->post('id', TRUE);
+        $row = $this->Item_transaction_model->get_by_id2($id);
+
+        if ($row) {
+            $this->Item_transaction_model->delete2($id);
+            // $this->session->set_flashdata('message', 'Delete Record Success');
+            // redirect(site_url('item_transaction'));
+            $data = array('message' => 'Delete Record Success');
+        } else {
+            // $this->session->set_flashdata('message', 'Record Not Found');
+            // redirect(site_url('item_transaction'));
+            $data = array('message' => 'Record Not Found');
+        }
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
+
     public function _rules() 
     {
 	$this->form_validation->set_rules('inventory_number', 'inventory number', 'trim|required');
@@ -222,6 +276,20 @@ class Item_transaction extends CI_Controller
 	$this->form_validation->set_rules('transaction_at', 'transaction at', 'trim|required');
 
 	$this->form_validation->set_rules('id', 'id', 'trim');
+	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    }
+
+    public function _rules2() 
+    {
+	$this->form_validation->set_rules('inventory_number', 'inventory number', 'trim|required');
+	$this->form_validation->set_rules('last_service_date', 'last service date', 'trim|required');
+	$this->form_validation->set_rules('id_services', 'id services', 'trim|required');
+	$this->form_validation->set_rules('provider_contact', 'provider contact', 'trim');
+	$this->form_validation->set_rules('staff_id', 'user id', 'trim|required');
+	$this->form_validation->set_rules('service_desc', 'service desc id', 'trim|required');
+	$this->form_validation->set_rules('id_frequency', 'id frequency', 'trim');
+	$this->form_validation->set_rules('service_schedule', 'service schedule', 'trim|required');
+	$this->form_validation->set_rules('id_maintenance', 'id maintenance', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 

@@ -48,6 +48,36 @@ class Item_transaction_model extends CI_Model
         return $this->datatables2->draw();
     }
 
+    function json2($id = '') {
+        $this->datatables2->select('item_maintenance.id_maintenance, 
+                                    item_maintenance.inventory_number,
+                                    item_maintenance.last_service_date,
+                                    item_maintenance.id_services,
+                                    item_maintenance.provider_contact,
+                                    item_maintenance.id_staff,
+                                    item_maintenance.service_desc,
+                                    item_maintenance.id_frequency,
+                                    item_maintenance.service_schedule,
+                                    ref_services.services as services_type,
+                                    ref_frequency.frequency as frequency,
+                                    staff.name as staff_name,
+                                    staff.id as staff_id
+                                    ');
+        $where = array('item_maintenance.status' => 1);
+        if ($id != '')
+            $where['item_maintenance.inventory_number'] = $id;
+        
+        $this->datatables2->where($where);
+        $this->datatables2->table('item_maintenance');
+        //add this line for join
+        $this->datatables2->join('ref_services', 'item_maintenance.id_services = ref_services.id_services','left');
+        $this->datatables2->join('ref_frequency', 'item_maintenance.id_frequency = ref_frequency.id_frequency','left');
+        $this->datatables2->join('staff', 'item_maintenance.id_staff = staff.id','left');
+        // $this->datatables2->add_column('action', '<button class="btn btn-primary btn-sm btn-edit" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'." 
+        //         ".'<button class="btn btn-danger btn-sm btn-remove" type="button"><i class="fa fa-trash" aria-hidden="true"></i></button>', 'id');
+        return $this->datatables2->draw();
+    }
+
     // get all
     function get_all()
     {
@@ -81,6 +111,12 @@ class Item_transaction_model extends CI_Model
         return $this->db->get($this->table)->row();
     }
     
+    function get_by_id2($id)
+    {
+        $this->db->where('id_maintenance', $id);
+        return $this->db->get('item_maintenance')->row();
+    }
+
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('id', $q);
@@ -126,11 +162,22 @@ class Item_transaction_model extends CI_Model
         $this->db->insert($this->table, $data);
     }
 
+    function insert2($data)
+    {
+        $this->db->insert('item_maintenance', $data);
+    }
+
     // update data
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
+    }
+
+    function update2($id, $data)
+    {
+        $this->db->where('id_maintenance', $id);
+        $this->db->update('item_maintenance', $data);
     }
 
     // delete data
@@ -139,6 +186,13 @@ class Item_transaction_model extends CI_Model
         $this->db->where('status', 1);
         $this->db->where($this->id, $id);
         $this->db->update($this->table,['status'=>0]);
+    }
+
+    function delete2($id)
+    {
+        $this->db->where('status', 1);
+        $this->db->where('id_maintenance', $id);
+        $this->db->update('item_maintenance',['status'=>0]);
     }
 
     function insert_batch($data){
