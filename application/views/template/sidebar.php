@@ -107,7 +107,7 @@ $(document).ready(function(){
         $("#id_country").change(function() {
             var id = $('#id_user').val();
             var id_cnt = $('#id_country').val();
-            document.location.href="../../asset-db/index.php/kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
+            document.location.href="../../rise-inventory/index.php/kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
         });
     });
 
