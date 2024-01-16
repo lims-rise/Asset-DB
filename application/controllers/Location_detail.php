@@ -164,6 +164,8 @@ class Location_detail extends CI_Controller
         $tablebody = 1;
         $nourut = 1;
         //penulisan header
+        ob_clean();
+
         header("Pragma: public");
         header("Expires: 0");
         header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
@@ -177,15 +179,15 @@ class Location_detail extends CI_Controller
 
         $kolomhead = 0;
         xlsWriteLabel($tablehead, $kolomhead++, "No");
-        xlsWriteLabel($tablehead, $kolomhead++, "Name");
-        xlsWriteLabel($tablehead, $kolomhead++, "Category Name");
+        xlsWriteLabel($tablehead, $kolomhead++, "Location Detail");
+        xlsWriteLabel($tablehead, $kolomhead++, "Location");
 	foreach ($this->Location_detail_model->get_all() as $data) {
             $kolombody = 0;
 
             //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
             xlsWriteNumber($tablebody, $kolombody++, $nourut);
             xlsWriteLabel($tablebody, $kolombody++, $data->name);
-            xlsWriteLabel($tablebody, $kolombody++, $data->category_name);
+            xlsWriteLabel($tablebody, $kolombody++, $data->location_name);
 
 
 	    $tablebody++;

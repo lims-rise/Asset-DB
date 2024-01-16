@@ -5,10 +5,10 @@ if (!defined('BASEPATH'))
     require 'vendor/autoload.php';
     
     // use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-    use PhpOffice\PhpSpreadsheet\IOFactory;
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
+    use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+    use PhpOffice\PhpSpreadsheet\IOFactory;
     use PhpOffice\PhpSpreadsheet\Reader\Csv;
-    use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
     use Google\Client as google_client;
     use Google\Service\Drive as google_drive;
 
@@ -21,7 +21,7 @@ class Reports extends CI_Controller
         is_login();
         $this->load->model('Reports_model');
         $this->load->library('form_validation');        
-	$this->load->library('datatables');
+	    $this->load->library('datatables');
     }
 
     public function index()
@@ -156,7 +156,212 @@ class Reports extends CI_Controller
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
+    // public function excel()
+    // {
+    //     $date1='0000-00-00';
+    //     $date2='0000-00-00';
+    //     $date1=$this->input->get('date1');
+    //     $date2=$this->input->get('date2');
+    //     $cat=$this->input->get('cat');
+    //     $subcat=$this->input->get('subcat');
+    //     $fund=$this->input->get('fund');
+    //     $loc=$this->input->get('loc');
+    //     $con=$this->input->get('con');
 
+    //     $this->load->database();
+
+    //     $spreadsheet = new Spreadsheet();
+
+    //     $sheets = array(
+    //         array(
+    //             'Sample_reception',
+    //             'SELECT a.inventory_number AS `Inventory_Number`, 
+    //             a.description AS `Description`, 
+    //             a.`name` AS `Name`, 
+    //             a.type AS `Type/Model`, 
+    //             a.serial_number AS `Serial_Number`, 
+    //             a.purchase_date AS `Purchase_Date`, 
+    //             a.purchase_price AS `Purchase_Price`, 
+    //             b.`name` AS `Category`, 
+    //             c.`name` AS `Sub_category`, 
+    //             d.`name` AS `Fund`, 
+    //             e.`name` AS `Manufacture`, 
+    //             f.`name` AS `Supplier`, 
+    //             g.qty AS `Qty`, 
+    //             i.`name` AS `Location`, 
+    //             h.`name` AS `Location_detail`, 
+    //             CONCAT(i.`name`, "(", h.`name`, ")") AS `Location_all`,
+    //             k.`name` AS `Responsible_Person`, 
+    //             a.`status` AS `Status`, 
+    //             j.`condition` AS `Condition`, 
+    //             j.purpose AS `Purpose`, 
+    //             j.remark AS `Remark`, 
+    //             a.category_id AS `category_id`, 
+    //             a.fund_id AS `fund_id`, 
+    //             h.id_location AS `id_location`, 
+    //             j.condition_id AS `condition_id`, 
+    //             a.location_det_id AS `location_det_id`, 
+    //             a.sub_category_id AS `sub_category_id`
+    //             FROM item_master a
+    //             LEFT JOIN item_category b ON a.category_id = b.id
+    //             LEFT JOIN item_sub_category c ON a.sub_category_id = c.id
+    //             LEFT JOIN item_fund d ON a.fund_id = d.id
+    //             LEFT JOIN item_manufacture e ON a.manufacture_id = e.id
+    //             LEFT JOIN item_supplier f ON a.supplier_id = f.id
+    //             LEFT JOIN item_qty g ON a.inventory_number = g.inventory_number
+    //             LEFT JOIN location_detail h ON a.location_det_id = h.id
+    //             LEFT JOIN location i ON h.id_location = i.id
+    //             LEFT JOIN (SELECT a.inventory_number, a.staff_id, c.max_date, a.condition_id, b.`name` AS `condition`, d.`name` AS staff, a.purpose, a.remark
+    //             FROM item_transaction a
+    //             LEFT JOIN item_condition b ON a.condition_id=b.id
+    //             LEFT JOIN staff d ON a.staff_id=d.id 
+    //             JOIN (SELECT inventory_number, MAX(transaction_at) AS max_date FROM item_transaction
+    //             GROUP BY inventory_number) c ON a.inventory_number=c.inventory_number AND a.transaction_at = c.max_date
+    //             GROUP BY a.inventory_number) j ON a.inventory_number=j.inventory_number
+    //             LEFT JOIN staff k ON j.staff_id = k.id 
+                
+    //             WHERE a.`status` = 1
+    //             AND a.purchase_date >= "'. $date1 . '"
+    //             AND a.purchase_date <= "'. $date2 . '"
+    //             AND a.category_id <= "'. $cat . '"
+    //             AND a.sub_category_id <= "'. $subcat . '"
+    //             AND a.fund_id <= "'. $fund . '"
+    //             AND a.location_det_id <= "'. $loc . '"
+    //             AND j.condition_id <= "'. $con . '"
+    //                 ',
+    //             array('Inventory_Number', 'Name', 'Description', 'Type/Model', 'Serial_Number', 'Purchase_Date',
+    //                 'Purchase_Price', 'Category', 'Sub_category', 'Fund', 'Manufacture', 'Supplier', 'Qty', 
+    //                 'Location', 'Location_detail', 'Responsible_Person', 'Condition', 'Purpose', 'Remark'), // Columns for Sheet1
+    //         ),
+    //         // Add more sheets as needed
+    //     );
+        
+    //     $spreadsheet->removeSheetByIndex(0);
+    //     foreach ($sheets as $sheetInfo) {
+    //         // Create a new worksheet for each sheet
+    //         $worksheet = $spreadsheet->createSheet();
+    //         $worksheet->setTitle($sheetInfo[0]);
+    
+    //         // SQL query to fetch data for this sheet
+    //         $sql = $sheetInfo[1];
+            
+    //         // Use the query builder to fetch data
+    //         $query = $this->db->query($sql);
+    //         $result = $query->result_array();
+            
+    //         // Column headers for this sheet
+    //         $columns = $sheetInfo[2];
+    
+    //         // Add column headers
+    //         $col = 1;
+    //         foreach ($columns as $column) {
+    //             $worksheet->setCellValueByColumnAndRow($col, 1, $column);
+    //             $col++;
+    //         }
+    
+    //         // Add data rows
+    //         $row = 2;
+    //         foreach ($result as $row_data) {
+    //             $col = 1;
+    //             foreach ($columns as $column) {
+    //                 $worksheet->setCellValueByColumnAndRow($col, $row, $row_data[$column]);
+    //                 $col++;
+    //             }
+    //             $row++;
+    //         }
+    //     }        
+        
+    //     // Create a new Xlsx writer
+    //     $writer = new Xlsx($spreadsheet);
+        
+    //     // Set the HTTP headers to download the Excel file
+    //     $datenow=date("Ymd");
+    //     $filename = 'RISE_Inventory_Report_'.$datenow.'.xlsx';
+
+    //     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    //     header('Content-Disposition: attachment;filename="' . $filename . '"');
+    //     header('Cache-Control: max-age=0');
+        
+    //     // Save the Excel file to the output stream
+    //     $writer->save('php://output');
+        
+    // }
+
+
+    // public function excel()
+	// {
+    //     /* Data */
+    //     $date1=$this->input->get('date1');
+    //     $date2=$this->input->get('date2');
+    //     $cat=$this->input->get('cat');
+    //     $subcat=$this->input->get('subcat');
+    //     $fund=$this->input->get('fund');
+    //     $loc=$this->input->get('loc');
+    //     $con=$this->input->get('con');
+
+    //     $spreadsheet = new Spreadsheet();    
+    //     $sheet = $spreadsheet->getActiveSheet();
+
+    //     $sheet->setCellValue('A1', "Inventory_number");
+    //     $sheet->setCellValue('B1', "Name");
+    //     $sheet->setCellValue('C1', "Description");
+    //     $sheet->setCellValue('D1', "Type/Model");
+    //     $sheet->setCellValue('E1', "Serial_number");
+    //     $sheet->setCellValue('F1', "Purchase_date");
+    //     $sheet->setCellValue('G1', "Purchase_price");
+    //     $sheet->setCellValue('H1', "Category");
+    //     $sheet->setCellValue('I1', "Sub_category");
+    //     $sheet->setCellValue('J1', "Fund");
+    //     $sheet->setCellValue('K1', "Manufacture");
+    //     $sheet->setCellValue('L1', "Supplier");
+    //     $sheet->setCellValue('M1', "Qty");
+    //     $sheet->setCellValue('N1', "Location");
+    //     $sheet->setCellValue('O1', "Location_detail");
+    //     $sheet->setCellValue('P1', "Responsible_Person");
+    //     $sheet->setCellValue('Q1', "Condition");
+    //     $sheet->setCellValue('R1', "Purpose");
+    //     $sheet->setCellValue('S1', "Remark");
+
+    //     // $sheet->getStyle('A1:H1')->getFont()->setBold(true); // Set bold kolom A1
+
+    //     // Panggil function view yang ada di SiswaModel untuk menampilkan semua data siswanya
+    //     // $rdeliver = $this->DNA_extraction_model->get_all();
+    //     $datax = $this->Reports_model->get_report($date1,$date2,$cat,$fund,$loc,$con,$subcat);
+    
+    //     // $no = 1; // Untuk penomoran tabel, di awal set dengan 1
+    //     $numrow = 2; // Set baris pertama untuk isi tabel adalah baris ke 4
+    //     foreach($datax as $data){ // Lakukan looping pada variabel siswa
+    //         $sheet->setCellValue('A' .$numrow, $data->inventory_number);
+    //         $sheet->setCellValue('B' .$numrow, $data->name);
+    //         $sheet->setCellValue('C' .$numrow, $data->description);
+    //         $sheet->setCellValue('D' .$numrow, $data->type);
+    //         $sheet->setCellValue('E' .$numrow, $data->serial_number);
+    //         $sheet->setCellValue('F' .$numrow, $data->purchase_date);
+    //         $sheet->setCellValue('G' .$numrow, $data->purchase_price);
+    //         $sheet->setCellValue('H' .$numrow, $data->category);
+    //         $sheet->setCellValue('I' .$numrow, $data->sub_category);
+    //         $sheet->setCellValue('J' .$numrow, $data->fund);
+    //         $sheet->setCellValue('K' .$numrow, $data->manufacture);
+    //         $sheet->setCellValue('L' .$numrow, $data->supplier);
+    //         $sheet->setCellValue('M' .$numrow, $data->qty);
+    //         $sheet->setCellValue('N' .$numrow, $data->location);
+    //         $sheet->setCellValue('O' .$numrow, $data->location_detail);
+    //         $sheet->setCellValue('P' .$numrow, $data->staffname);
+    //         $sheet->setCellValue('Q' .$numrow, $data->condition);
+    //         $sheet->setCellValue('R' .$numrow, $data->purpose);
+    //         $sheet->setCellValue('S' .$numrow, $data->remark);
+    //     //   $no++; // Tambah 1 setiap kali looping
+    //       $numrow++; // Tambah 1 setiap kali looping
+    //     }
+    // $writer = new \PhpOffice\PhpSpreadsheet\Writer\Csv($spreadsheet);
+    // $datenow=date("Ymd");
+    // $fileName = 'RISE_Inventory_Report_'.$datenow.'.csv';
+
+    // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    // header("Content-Disposition: attachment; filename=$fileName"); // Set nama file excel nya
+    // header('Cache-Control: max-age=0');
+
+    // }
 
     public function excel()
 	{
@@ -170,6 +375,7 @@ class Reports extends CI_Controller
         $con=$this->input->get('con');
         $data = $this->Reports_model->get_report($date1,$date2,$cat,$fund,$loc,$con,$subcat);
 
+        // var_dump($data);
         /* Spreadsheet Init */
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -268,99 +474,17 @@ class Reports extends CI_Controller
 
         /* Excel File Format */
         $writer = new Xlsx($spreadsheet);
+        ob_clean();
         $filename = 'RISE_Inventory_Report_' . date('Ymd');
         
-        header('Content-Type: application/vnd.ms-excel');
+        // header('Content-Type: application/vnd.ms-excel');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8');
         header('Content-Disposition: attachment;filename="'. $filename .'.xlsx"'); 
         header('Cache-Control: max-age=0');
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
         $writer->save('php://output');
-    }
-
-
-    // public function excel()
-    // {
-    //     $date1=$this->input->get('date1');
-    //     $date2=$this->input->get('date2');
-    //     $cat=$this->input->get('cat');
-    //     $fund=$this->input->get('fund');
-    //     $loc=$this->input->get('loc');
-
-    //     $this->load->helper('exportexcel');
-    //     $namaFile = "reports.xlsx";
-    //     $judul = "reports";
-    //     $tablehead = 0;
-    //     $tablebody = 1;
-    //     $nourut = 1;
-    //     //penulisan header
-    //     header("Pragma: public");
-    //     header("Expires: 0");
-    //     header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-    //     header("Content-Type: application/force-download");
-    //     header("Content-Type: application/octet-stream");
-    //     header("Content-Type: application/download");
-    //     header("Content-Disposition: attachment;filename=" . $namaFile . "");
-    //     header("Content-Transfer-Encoding: binary ");
-
-    //     xlsBOF();
-
-    //     $kolomhead = 0;
-    //     xlsWriteLabel($tablehead, $kolomhead++, "No");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Inventory_number");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Name");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Descriptions");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Type");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Serial_number");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Purchase_date");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Purchase_price");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Category");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Sub_category");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Fund");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Manufacture");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Supplier");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Qty");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Location");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Location_detail");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Staffname");
-	//     xlsWriteLabel($tablehead, $kolomhead++, "Condition");
-
-
-	// foreach ($this->Reports_model->get_report($date1,$date2,$cat,$fund,$loc) as $data) {
-    //         $kolombody = 0;
-
-    //         //ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric
-    //         xlsWriteNumber($tablebody, $kolombody++, $nourut);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->inventory_number);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->name);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->description);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->type);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->serial_number);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->purchase_date);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->purchase_price);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->category);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->sub_category);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->fund);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->manufacture);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->supplier);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->qty);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->location);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->location_detail);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->staffname);
-	//         xlsWriteLabel($tablebody, $kolombody++, $data->condition);
-
-
-	//     $tablebody++;
-    //         $nourut++;
-    //     }
-
-    //     xlsEOF();
-    //     exit();
-    // }
-
-
-
-
+    }    
 
 }
 

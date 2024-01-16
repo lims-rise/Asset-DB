@@ -399,6 +399,7 @@ class Item_master extends CI_Controller
 
         /* Excel File Format */
         $writer = new Xlsx($spreadsheet);
+        ob_clean();
         $filename = 'Inventory_List_' . date('Ymd');
         
         header('Content-Type: application/vnd.ms-excel');

@@ -101,9 +101,19 @@ class Item_master_model extends CI_Model
         $this->datatables->from('item_master');
         //add this line for join
         //$this->datatables->join('table2', 'item_master.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 1){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"> test</i>', array('class' => 'btn bg-navy btn-sm'))." 
             ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm'))." 
-                ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number');
+            ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number');
+        }
+        else if ($lvl == 2){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"> test</i>', array('class' => 'btn bg-navy btn-sm'))." 
+            ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm')), 'inventory_number');
+        }
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"> test</i>', array('class' => 'btn bg-navy btn-sm')), 'inventory_number');
+        }
         return $this->datatables->generate();
     }
 
@@ -119,9 +129,19 @@ class Item_master_model extends CI_Model
         $this->datatables->from('item_master');
         //add this line for join
         //$this->datatables->join('table2', 'item_master.field = table2.field');
-        $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm')), 'inventory_number');
+        }
+        else if ($lvl == 2){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
+            ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm')), 'inventory_number');
+        }
+        else if ($lvl == 1){
+            $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
             ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm'))." 
-                ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number');
+            ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number');
+        }
         return $this->datatables->generate();
     }
 
@@ -153,11 +173,23 @@ class Item_master_model extends CI_Model
             }
         }
         $this->datatables->where('loc.id', $this->session->userdata('location_id'));
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 1){
+            return  $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm' , 'style'=> 'margin:0 3px 3px 0'))." 
+            ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm', 'style'=> 'margin:0 3px 3px 0'))." 
+            ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm"  style ="margin:0 3px 3px 0" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number')
+            ->generate();
+        }
+        else if ($lvl == 2){
+            return  $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm' , 'style'=> 'margin:0 3px 3px 0'))." 
+            ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm', 'style'=> 'margin:0 3px 3px 0')), 'inventory_number')
+            ->generate();
+        }
+        else if ($lvl == 3){
+            return  $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm' , 'style'=> 'margin:0 3px 3px 0')), 'inventory_number')
+            ->generate();
+        }
 
-             return  $this->datatables->add_column('action', anchor(site_url('item_master/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm' , 'style'=> 'margin:0 3px 3px 0'))." 
-                ".anchor(site_url('item_master/update?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm', 'style'=> 'margin:0 3px 3px 0'))." 
-                    ".anchor(site_url('item_master/delete?id=$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm"  style ="margin:0 3px 3px 0" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'inventory_number')
-                            ->generate();
     }
 
     // function get_all_with_detail2($getinput){

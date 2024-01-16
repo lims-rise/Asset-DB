@@ -24,8 +24,18 @@
                         <!-- //filter -->
 
                         <div class="pull-left">
-                        <?php echo anchor(site_url('item_master/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Data', 'class="btn btn-primary btn-sm"'); ?>
-		                <?php echo anchor(site_url('item_master/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
+
+                        <?php
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo anchor(site_url('item_master/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); 
+                            }
+                            else { ?>                        
+                                <?php echo anchor(site_url('item_master/create'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Data', 'class="btn btn-primary btn-sm"'); ?>
+                                <?php echo anchor(site_url('item_master/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?>
+                                <?php
+                            }
+                        ?>
                         </div>
                     </div>
         

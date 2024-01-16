@@ -24,9 +24,20 @@ class Staff_model extends CI_Model
         $this->datatables->where('location.id', $this->session->userdata('location_id'));
         $this->datatables->from('staff');
         //add this line for join
-        $this->datatables->add_column('action', anchor(site_url('staff/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
+        $lvl = $this->session->userdata('id_user_level');
+        if ($lvl == 1){
+            $this->datatables->add_column('action', anchor(site_url('staff/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
             ".anchor(site_url('staff?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-success btn-sm'))." 
-                ".anchor(site_url('staff/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id');
+            ".anchor(site_url('staff/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id');
+        }
+        else if ($lvl == 2){
+            $this->datatables->add_column('action', anchor(site_url('staff/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm'))." 
+            ".anchor(site_url('staff?id=$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-success btn-sm')), 'id');
+        }
+        else if ($lvl == 3){
+            $this->datatables->add_column('action', anchor(site_url('staff/read?id=$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn bg-navy btn-sm')), 'id');
+        }
+
         return $this->datatables->generate();
     }
 

@@ -27,7 +27,17 @@
 					</ul>
                     <input type="hidden" name="file"  id="file">
                     <input type="hidden" name="id" value="<?php echo $id ?? '' ; ?>">
-					<button type="submit" class="btn <?php echo $button_color ?? 'btn-primary'; ?> btn-block"><b><?php echo strtoupper($button ?? 'NEW') ?> </b></button>
+                    <?php
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo "";
+                            }
+                            else { ?>
+                                <button type="submit" class="btn <?php echo $button_color ?? 'btn-primary'; ?> btn-block"><b><?php echo strtoupper($button ?? 'NEW') ?> </b></button>
+                            <?php
+                            }
+                        ?>
+
                     </form>
 				</div>
 			</div>
@@ -38,7 +48,15 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">STAFF LIST</h3>
                         <div class="pull-right">
-        <?php echo anchor(site_url('staff'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Data', 'class="btn btn-primary btn-sm"'); ?>
+                        <?php 
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo "";
+                            }
+                            else { 
+                                echo anchor(site_url('staff'), '<i class="fa fa-wpforms" aria-hidden="true"></i> New Data', 'class="btn btn-primary btn-sm"'); 
+                            }                        
+                        ?>
                         </div>
                     </div>
         

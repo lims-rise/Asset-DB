@@ -49,7 +49,16 @@
                     <div class="box-header with-border">
                         <h3 class="box-title">INVENTORY LIST <b id="searchTitle"></b></h3>
                         <div class="pull-right">
-                            <button class="btn btn-sm bg-navy transfer-all"><i class="fa fa-refresh"></i> Transfer All</button>
+                        <?php
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo "";
+                            }
+                            else { ?>
+                                <button class="btn btn-sm bg-navy transfer-all"><i class="fa fa-refresh"></i> Transfer All</button>
+                            <?php
+                            }
+                        ?>                    
                         </div>
                     </div>
         
@@ -155,7 +164,17 @@
 			<div class="modal-footer">
 				<input type="hidden" class="form-control" name="inventory_number" id="inventory_number">
 				<button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save changes</button>
+                <?php
+                    $lvl = $this->session->userdata('id_user_level');
+                    if ($lvl == 3){                         
+                        echo "";
+                    }
+                    else { ?>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <?php
+                    }
+                ?>
+
 			</div>
 		</div>
 	</div>

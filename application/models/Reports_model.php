@@ -62,6 +62,10 @@ class Reports_model extends CI_Model
     // get report
     function get_report($date1,$date2,$cat,$fund,$loc,$con,$subcat)
     {
+        // $this->db->select('inventory_number, description, 
+        // `name`, type, serial_number, purchase_date, purchase_price, category,
+        // sub_category, fund, manufacture, supplier, qty, location,
+        // location_detail, location_all, staffname, condition, `status`, `condition`, purpose, remark');
         $this->db->where('status', 1);
         if (strlen($date1) > 0) {
             $this->db->where("(purchase_date >= IF('$date1' IS NULL or '$date1' = '', '0000-00-00', '$date1'))", NULL);

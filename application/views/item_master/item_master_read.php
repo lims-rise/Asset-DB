@@ -143,7 +143,17 @@
 
 					<div class="box-body">
 						<div style="padding-bottom: 10px;">
-							<button class="btn btn-danger btn-sm btn-modal" type="button"><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+						<?php
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo "";
+                            }
+                            else {
+								?>
+								<button class="btn btn-danger btn-sm btn-modal" type="button"><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+								<?php
+							}
+                        ?>
 							<?php echo anchor(site_url('item_transaction/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?></div>
 							<table class="table table-bordered table-striped" width="100%" id="mytable">
 								<thead>
@@ -176,7 +186,18 @@
 
 					<div class="box-body">
 						<div style="padding-bottom: 10px;">
-							<button class="btn btn-danger btn-sm btn-maintenance" type="button"><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+						<?php
+                            $lvl = $this->session->userdata('id_user_level');
+                            if ($lvl == 3){                         
+                                echo "";
+                            }
+                            else {
+								?>
+									<button class="btn btn-danger btn-sm btn-maintenance" type="button"><i class="fa fa-wpforms" aria-hidden="true"></i> New Data</button>
+								<?php
+							}
+                        ?>
+
 							<?php echo anchor(site_url('item_transaction/excel'), '<i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Ms Excel', 'class="btn btn-success btn-sm"'); ?></div>
 							<table class="table table-bordered table-striped" width="100%" id="mytable2">
 								<thead>
@@ -511,9 +532,21 @@ $(function() {
             },
             {
                 render : function(){
-					let html =  "<button class='btn btn-primary btn-sm btn-edit' type='button' style='margin-right:10px'><i class='fa fa-pencil' aria-hidden='true'></i></button>"
-					html += "<button class='btn btn-danger btn-sm btn-remove' type='button'><i class='fa fa-trash' aria-hidden='true'></i></button>"
-					return html
+					<?php
+						$lvl = $this->session->userdata('id_user_level');
+						if ($lvl == 3){                         
+							?>
+							let html = ""
+							<?php
+						}
+						else {                         
+							?>
+							let html =  "<button class='btn btn-primary btn-sm btn-edit' type='button' style='margin-right:10px'><i class='fa fa-pencil' aria-hidden='true'></i></button>"
+							html += "<button class='btn btn-danger btn-sm btn-remove' type='button'><i class='fa fa-trash' aria-hidden='true'></i></button>"
+							<?php
+						}
+					?>
+							return html
 				}
             }
         ],
@@ -605,8 +638,20 @@ $(function() {
             },
             {
                 render : function(){
-					let html =  "<button class='btn btn-primary btn-sm btn-edit2' type='button' style='margin-right:10px'><i class='fa fa-pencil' aria-hidden='true'></i></button>"
-					html += "<button class='btn btn-danger btn-sm btn-remove2' type='button'><i class='fa fa-trash' aria-hidden='true'></i></button>"
+					<?php
+						$lvl = $this->session->userdata('id_user_level');
+						if ($lvl == 3){                         
+							?>
+							let html = ""
+							<?php
+						}
+						else {                         
+							?>
+							let html =  "<button class='btn btn-primary btn-sm btn-edit2' type='button' style='margin-right:10px'><i class='fa fa-pencil' aria-hidden='true'></i></button>"
+							html += "<button class='btn btn-danger btn-sm btn-remove2' type='button'><i class='fa fa-trash' aria-hidden='true'></i></button>"
+							<?php
+						}
+					?>
 					return html
 				}
             }
