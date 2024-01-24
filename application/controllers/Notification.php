@@ -29,8 +29,8 @@ class Notification extends CI_Controller {
 		if($num > 0){
 
 			$data = array(
-				'id' => $cek->inventory_number,
-				'years' => $cek->year_now,
+				'id' => $cek->inventory_number . $cek->next_service,
+				'last_services' => $cek->next_service,
 				'updated' => date('Y-m-d H:i:s')
 			);
 
@@ -81,6 +81,9 @@ class Notification extends CI_Controller {
 				  $test .= 'Serial number : ' .$cek->serial_number . '<br />';
 				  $test .= 'Location : ' . $cek->loc_det . ', ' . $cek->loc . '<br />';
 				  $test .= 'Latest services : ' . $cek->last_services . '<br />';
+				  $test .= 'Frequency : ' . $cek->frequency . '<br />';
+				  $test .= 'Next services : ' . $cek->next_service . '<br />';
+				  $test .= 'Services type : ' . $cek->services . '<br />';
 				  $test .= '<br />' ;
 				  $test .= '<br />' ;
 				  $test .= 'Regards, <br />' ;
