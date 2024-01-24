@@ -24,7 +24,12 @@ class Notification extends CI_Controller {
 
 
 		$cek = $this->db->from('v_item_notif')->get()->row();
-		$catlog = array($cek->category_id . $cek->id_location, '1');
+		if ($cek) {
+			$catlog = array($cek->category_id . $cek->id_location, '1');
+		}
+		else {
+			$catlog = array('1');
+		}
 		$num = $this->db->count_all_results('v_item_notif');
 		if($num > 0){
 
@@ -34,31 +39,11 @@ class Notification extends CI_Controller {
 				'updated' => date('Y-m-d H:i:s')
 			);
 
-			// if($cek->row() > 0){
-		// $user_phone = $this->db->from('user_phone')->where('active',1)->get()->result(); 
-
-		// 	if($data['status'] == 1 )
-		// 		$sms = $this->db->from('smoke_sms')->where('id',4)->get()->row();
-		// 	else
-		// 		$sms = $this->db->from('smoke_sms')->where('id',3)->get()->row();
-		// 	if($data['idalat'] == 3) $lab = 1; else $lab = 2;
-
-		// 	foreach ($user_phone as $row) {
-		// 		$this->db->insert('outbox',array(
-		// 			'DestinationNumber' => $row->no_phone,
-		// 			'TextDecoded' => $sms->text . ' ' .$lab .' date:' . date('Y-m-d H:i:s'),	
-		// 			'CreatorID' => 'power_sensor',
-		// 			'SendingDateTime' =>  date('Y-m-d H:i:s'),
-		// 			'InsertIntoDB' =>  date('Y-m-d H:i:s'),
-		// 			'SendingTimeOut' =>  date('Y-m-d H:i:s')
-		// 		));
-		// 	}
-
 			try {
 				$to = $this->db->from('email_notif')
 								->select('email')
 								->where('status',1)
-								->where_in('catlog',$catlog)
+								->where_in('catlog', $catlog)
 								->get()
 								->result_array();
 				$to = array_column($to, 'email');
@@ -67,14 +52,13 @@ class Notification extends CI_Controller {
 
 				  // Email penerima
 				  $this->email->to($to); // Ganti dengan email tujuan
-				//   $this->email->to('zainal.rise@gmail.com'); // Ganti dengan email tujuan
+				//   $this->email->to('Zainal.Handis@monash.edu'); // Ganti dengan email tujuan
 		  
 				  // Subject email
-				//   $this->email->subject('Equipment services notification ' . date('Y-m-d H:i:s'));
-				  $this->email->subject('Equipment services notification ' . date('Y-m-d H:i:s'));
+				  $this->email->subject('RISE Assets DB - Equipment services notification ' . date('Y-m-d'));
 
 				  $test = 'Hi There, <br />' ;
-				  $test .= 'This is an automatic notification email sent from RISE-Inventory application to notify you that the following equipment is need to be services <br />';
+				  $test .= 'This is an automatic notification email sent from RISE-Inventory application to notify you that the following equipment is need to "' .$cek->services. '" <br />';
 				  $test .= '<br />' ;
 				  $test .= 'Equipment name : ' . $cek->name . '<br />';
 				  $test .= 'Type : ' .$cek->type . '<br />';
@@ -84,6 +68,8 @@ class Notification extends CI_Controller {
 				  $test .= 'Frequency : ' . $cek->frequency . '<br />';
 				  $test .= 'Next services : ' . $cek->next_service . '<br />';
 				  $test .= 'Services type : ' . $cek->services . '<br />';
+				  $test .= '<br />' ;
+				  $test .= 'Don`t forget to add the current maintenance service to this item once the "' .$cek->services. '" is completed.<br />';
 				  $test .= '<br />' ;
 				  $test .= '<br />' ;
 				  $test .= 'Regards, <br />' ;
