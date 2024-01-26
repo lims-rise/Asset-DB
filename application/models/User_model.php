@@ -81,12 +81,28 @@ class User_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
+    function update_reset($id, $data)
+    {
+        $this->db->where('email', $id);
+        $this->db->update($this->table, $data);
+    }
+
     // delete data
     function delete($id)
     {
         $this->db->where($this->id, $id);
         $this->db->delete($this->table);
     }
+
+    function validate_code($id1,$id2){
+        $sql_asys = $this->db->query('SELECT * FROM user_reset
+            WHERE emails = "'.$id2.'"
+            AND resetcode = "'.$id1.'"
+            ');
+        $response = $sql_asys->result_array();
+        return $response;
+        // return $this->db->get('ref_location_80')->row();
+      }    
 
 }
 

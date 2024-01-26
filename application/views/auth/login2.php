@@ -13,6 +13,7 @@
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">  -->
     <!-- Font Awesome-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('login/css/fontawesome.css'); ?>">
     <!-- ico-font-->
@@ -97,21 +98,105 @@
             
                 <div class="card mt-4 p-4 mb-0" style="opacity: 0.9;">
                 <?php echo form_open('auth/cheklogin'); ?>
-                        <div class="form-group">
-                            <input class="form-control" name="email" type="text" placeholder="email" value="" required>
-                            <div class="invalid-feedback"> </div>
+                        <div class="form-group has-feedback">
+                            <input class="form-control" name="email" type="text" placeholder="Email" value="" required>
+                            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                            <!-- <div class="invalid-feedback"> </div> -->
                         </div>
-                        <div class="form-group">
-                            <input class="form-control" name="password" type="password" placeholder="password" value="" required>
-                            <div class="invalid-feedback"> </div>
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <input class="form-control" name="password" type="password" placeholder="Password" value="" required>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close bt1" style="cursor:pointer"></span>
+                            </div>
+                        <!-- <div class="invalid-feedback"> </div> -->
                         </div>
                         <button class="btn btn-primary btn-block" type="submit">Login</button>
                     </form>
-                  </div>
+                    <a href="#" id='addtombol'>Forget password?</a>
+                   </div>
              </div>
             </div>
         </div>
     </div>
+
+    <!-- MODAL FORM -->
+    <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header box">
+                    <h4 class="modal-title" id="modal-title">Forget password?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <!-- <form id="formSample"  action= <?php //echo site_url('Auth/forgetpassword') ?> method="post" class="form-horizontal"> -->
+                <form id="formSample" method="post" class="form-horizontal">
+                    <div class="modal-body">
+                        <div class="form-group">
+                        <input id="mode" name="mode" type="hidden" class="form-control input-sm">
+                            <label for="email" class="col-sm-8 control-label">Enter your LIMS login email</label>
+                            <div class="col-sm-8">
+                                <input id="email" name="email" type="text" class="form-control" placeholder="Email" required>
+                                <!-- <div class="val1tip"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Request code</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->        
+
+
+    <!-- MODAL FORM 2-->
+    <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header box">
+                    <h4 class="modal-title" id="modal-title">Reset Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <form id="formSample"  action= <?php echo site_url('Auth/savepassword') ?> method="post" class="form-horizontal">
+                    <div class="modal-body">
+                        <p>6 digit Code has been sent to your email, please check your email</p>
+                        <input id="emailsend" name="emailsend" type="hidden" class="form-control input-sm">
+                        <div class="form-group">
+                            <label for="code" class="col-sm-8 control-label">Your Code?</label>
+                            <div class="col-sm-8">
+                                <input id="code" name="code" type="text" class="form-control" placeholder="Insert your code here" required>
+                                <!-- <div class="val1tip"></div> -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_pass" class="col-sm-8 control-label">New password</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input id="new_pass" name="new_pass" type="password" class="form-control" placeholder="New password" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close bt1" style="cursor:pointer"></span>
+                                    <!-- <div class="val1tip"></div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="re_pass" class="col-sm-8 control-label">Retype password</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input id="re_pass" name="re_pass" type="password" class="form-control" placeholder="Retype password" required>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-eye-close bt1" style="cursor:pointer"></span>
+                                    <!-- <div class="val1tip"></div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Reset password</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->            
     <!-- latest jquery-->
     <script src="<?php echo base_url('login/js/jquery-3.5.1.min.js'); ?>"></script>
     <!-- Bootstrap js-->
@@ -121,6 +206,147 @@
     <script src="<?php echo base_url('login/js/config.js'); ?>"></script>
     <!-- Theme js-->
     <script src="<?php echo base_url('login/js/script.js'); ?>"></script>
+
+
+    <script>
+    $(document).ready(function() {
+
+        $('#code').on("change", function() {
+            data1 = $('#code').val();
+            data2 = $('#emailsend').val();
+            $.ajax({
+                type: "GET",
+                url: "Auth/valid_code?id1="+data1+"&id2="+data2,
+                dataType: "json",
+                success: function(data) {
+                    if (data.length == 0) {
+                        $('#code').focus();
+                        $('#code').val('');     
+                        $('#code').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#code').css({'background-color' : '#FFFFFF'});
+                            setTimeout(function(){
+                                $('#code').css({'background-color' : '#FFE6E7'});
+                                setTimeout(function(){
+                                    $('#code').css({'background-color' : '#FFFFFF'});
+                                }, 300);                            
+                            }, 300);
+                        }, 300);
+                    }
+                }
+            });
+        });
+
+        // $('#email').on("change", function() {
+        //     $('#emailsend').val($('#email').val());     
+        // });
+
+        $('#re_pass').on("change", function() {
+            data1 = $('#new_pass').val();
+            data2 = $('#re_pass').val();
+            if (data1 != data2) {
+                $('#re_pass').focus();
+                $('#re_pass').val('');     
+                $('#re_pass').css({'background-color' : '#FFE6E7'});
+                setTimeout(function(){
+                    $('#re_pass').css({'background-color' : '#FFFFFF'});
+                    setTimeout(function(){
+                        $('#re_pass').css({'background-color' : '#FFE6E7'});
+                        setTimeout(function(){
+                            $('#re_pass').css({'background-color' : '#FFFFFF'});
+                        }, 300);                            
+                    }, 300);
+                }, 300);
+            }
+            });
+        });
+
+        $('#addtombol').click(function() {
+            // $('.val1tip').tooltipster('hide');   
+            // $('#modal-title').html('<i class="fa fa-wpforms"></i> Forget Password ?<span id="my-another-cool-loader"></span>');
+            $('#email').val('');
+            $('#compose-modal').modal('show');
+        });
+
+        // $('#formSample').submit(function(e) {
+        //     e.preventDefault();
+        //     // Perform your form submission logic here
+        //     // For demonstration purposes, let's assume the form is successfully submitted
+        //     // You may want to use AJAX to submit the form data to your server
+        //     // Show the second modal after the form is submitted
+        //     $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password ?<span id="my-another-cool-loader"></span>');
+        //     $('#code').val('');
+        //     $('#new_pass').val('');
+        //     $('#reset-modal').modal('show');
+        // });            
+
+        $('#formSample').submit(function(e) {
+            e.preventDefault();
+            // Get form data
+            var formData = $(this).serialize();
+
+            // Perform AJAX request to submit the form data
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo site_url('Auth/forgetpassword'); ?>',
+                data: formData,
+                dataType: 'json', // Change this based on your server response
+                success: function(response) {
+                    // Handle the server response here
+                    // Show the second modal after the form is successfully submitted
+                    if (response.status === 'success') {
+                        // $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password<span id="my-another-cool-loader"></span>');
+                        $('#emailsend').val($('#email').val());
+                        $('#code').val('');
+                        $('#new_pass').val('');
+                        $('#compose-modal').modal('hide');
+                        $('#reset-modal').modal('show');
+                    }
+                    else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response here
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
+        $(".bt1").bind("click", function() {
+            // if ($('#password').attr('type') =='password'){
+            //     $('#password').attr('type','text');
+            //     $('.bt1').removeClass('glyphicon-eye-close');
+            //     $('.bt1').addClass('glyphicon-eye-open');
+            // }else if($('#password').attr('type') =='text'){
+            //     $('#password').attr('type','password');
+            //     $('.bt1').removeClass('glyphicon-eye-open');
+            //     $('.bt1').addClass('glyphicon-eye-close');
+            // }
+
+            if ($('#new_pass').attr('type') =='password'){
+                $('#new_pass').attr('type','text');
+                $('.bt1').removeClass('glyphicon-eye-close');
+                $('.bt1').addClass('glyphicon-eye-open');
+            }else if($('#new_pass').attr('type') =='text'){
+                $('#new_pass').attr('type','password');
+                $('.bt1').removeClass('glyphicon-eye-open');
+                $('.bt1').addClass('glyphicon-eye-close');
+            }                
+
+            if ($('#re_pass').attr('type') =='password'){
+                $('#re_pass').attr('type','text');
+                $('.bt1').removeClass('glyphicon-eye-close');
+                $('.bt1').addClass('glyphicon-eye-open');
+            }else if($('#re_pass').attr('type') =='text'){
+                $('#re_pass').attr('type','password');
+                $('.bt1').removeClass('glyphicon-eye-open');
+                $('.bt1').addClass('glyphicon-eye-close');
+            }                
+
+            });    
+    
+    </script>    
 </body>
 
 </html>
