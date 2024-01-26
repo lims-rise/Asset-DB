@@ -431,11 +431,11 @@ class Reports extends CI_Controller
         $sheet->setCellValue($hcolumn++ . $start, "Purpose");
         $sheet->setCellValue($hcolumn++ . $start, "Remark");
         $sheet->setCellValue($hcolumn++ . $start, "Services_type");
+        $sheet->setCellValue($hcolumn++ . $start, "Frequency");
         $sheet->setCellValue($hcolumn++ . $start, "Last_service_date");
         $sheet->setCellValue($hcolumn++ . $start, "Next_service_date");
         $sheet->setCellValue($hcolumn++ . $start, "Provider_contact");
         $sheet->setCellValue($hcolumn++ . $start, "Staff_PIC");
-        $sheet->setCellValue($hcolumn++ . $start, "Frequency");
         $sheet->setCellValue($hcolumn++ . $start, "Schedule prior(weeks)");
         
         /* Excel Data */
@@ -465,11 +465,11 @@ class Reports extends CI_Controller
             $sheet->setCellValue($column++ .$row_number, $row->purpose);
             $sheet->setCellValue($column++ .$row_number, $row->remark);
             $sheet->setCellValue($column++ .$row_number, $row->services);
+            $sheet->setCellValue($column++ .$row_number, $row->frequency);
             $sheet->setCellValue($column++ .$row_number, $row->last_service_date);
             $sheet->setCellValue($column++ .$row_number, $row->next_service);
             $sheet->setCellValue($column++ .$row_number, $row->provider_contact);
             $sheet->setCellValue($column++ .$row_number, $row->Staff_PIC);
-            $sheet->setCellValue($column++ .$row_number, $row->frequency);
             $sheet->setCellValue($column++ .$row_number, $row->service_schedule);
         
             $row_number++;
