@@ -161,12 +161,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header box">
-                    <h4 class="modal-title" id="modal-title">Reset Password</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modal-title">Reset Password</h4>
                 </div>
                 <form id="formSample"  action= <?php echo site_url('Auth/savepassword') ?> method="post" class="form-horizontal">
                     <div class="modal-body">
                         <p>6 digit Code has been sent to your email, please check your email</p>
+                        <hr>
                         <input id="emailsend" name="emailsend" type="hidden" class="form-control input-sm">
                         <div class="form-group">
                             <label for="code" class="col-sm-8 control-label">Your Code?</label>

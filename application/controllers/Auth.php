@@ -128,7 +128,7 @@ Class Auth extends CI_Controller{
                 echo json_encode($response);
             }
         } else {
-            $response = array('status' => 'error', 'message' => 'LIMS login email not found !!.');
+            $response = array('status' => 'error', 'message' => 'Asset-DB login email not found !!.');
             echo json_encode($response);
         }
         // redirect(site_url("Auth"));
