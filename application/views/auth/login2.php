@@ -138,6 +138,13 @@
                                 <!-- <div class="val1tip"></div> -->
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 text-center">
+                                <div id="quickMessage" class="form-group"></div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer clearfix">
                         <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Request code</button>
@@ -262,9 +269,11 @@
         });
 
         $('#addtombol').click(function() {
+            $('#modal-title').html('<i class="fa fa-wpforms"></i> Forget Password ?<span id="my-another-cool-loader"></span>');
+            $('#email').val('');
+            $('#quickMessage').empty();
             // $('.val1tip').tooltipster('hide');   
             // $('#modal-title').html('<i class="fa fa-wpforms"></i> Forget Password ?<span id="my-another-cool-loader"></span>');
-            $('#email').val('');
             $('#compose-modal').modal('show');
         });
 
@@ -281,6 +290,12 @@
         // });            
 
         $('#formSample').submit(function(e) {
+            $('#quickMessage').empty();
+            var loadingMessage = $('<p></p>').addClass('text-info').text('Checking your email and sending your code, please wait...');
+            $('#quickMessage').append(loadingMessage);
+
+            $('#formSample button[type="submit"]').prop('disabled', true);
+
             e.preventDefault();
             // Get form data
             var formData = $(this).serialize();
@@ -295,6 +310,8 @@
                     // Handle the server response here
                     // Show the second modal after the form is successfully submitted
                     if (response.status === 'success') {
+                        $('#formSample button[type="submit"]').prop('disabled', false);
+                        $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password<span id="my-another-cool-loader"></span>');
                         // $('#modal-title').html('<i class="fa fa-wpforms"></i> Reset Password<span id="my-another-cool-loader"></span>');
                         $('#emailsend').val($('#email').val());
                         $('#code').val('');
@@ -303,7 +320,12 @@
                         $('#reset-modal').modal('show');
                     }
                     else {
-                        alert(response.message);
+                        // alert(response.message);
+                        $('#quickMessage').empty();
+                        var loadingMessage = $('<p></p>').addClass('text-info').text('Email not found, please enter the correct LIMS login email');
+                        $('#quickMessage').append(loadingMessage);
+                        $('#email').val('');
+                        $('#formSample button[type="submit"]').prop('disabled', false);
                     }
                 },
                 error: function(xhr, status, error) {
