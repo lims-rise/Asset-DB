@@ -101,13 +101,18 @@
 <script src="<?php echo base_url(); ?>assets/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
 
 <script type="text/javascript">
+// const base_url = "{{ base_url }}";
 $(document).ready(function(){
 
     $(function() {
+        // const base_url = base_url + "index.php/kelolamenu/clab";
         $("#id_country").change(function() {
             var id = $('#id_user').val();
             var id_cnt = $('#id_country').val();
-            document.location.href="../../rise-inventory/index.php/kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
+            // document.location.href = base_url + "?id=" + id + "&id_cnt=" + id_cnt;            
+            // document.location.href = base_url + "/index.php/kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
+            // document.location.href="../../Asset-DB/index.php/kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
+            document.location.href="kelolamenu/clab?id="+id+'&id_cnt='+id_cnt;
         });
     });
 

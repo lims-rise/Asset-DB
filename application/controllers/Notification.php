@@ -58,7 +58,7 @@ class Notification extends CI_Controller {
 				  $this->email->subject('RISE Assets DB - Equipment services notification ' . date('Y-m-d'));
 
 				  $test = 'Hi There, <br />' ;
-				  $test .= 'This is an automatic notification email sent from RISE-Inventory application to notify you that the following equipment is need to "' .$cek->services. '" <br />';
+				  $test .= 'This is an automatic notification email sent from Assets DB application to notify you that the following equipment is need to "' .$cek->services. '" <br />';
 				  $test .= '<br />' ;
 				  $test .= 'Equipment name : ' . $cek->name . '<br />';
 				  $test .= 'Type : ' .$cek->type . '<br />';

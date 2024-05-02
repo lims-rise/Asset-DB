@@ -189,13 +189,13 @@
 						<label for='inputEmail3'
 							class='col-sm-2 control-label'>Location<?php echo form_error('id_location') ?></label>
 						<div class='col-sm-10' style="margin-bottom:10px;">
-							<?php echo select2_dinamis('id_location', 'location', 'name','Location','id',$id_location) ?>
+							<?php echo select2_dinamis('id_location', 'location', 'name','Location','id',$id_location,null,['required' => 'required']) ?>
 						</div>
 					</div>
 					<div class='form-group'>
 						<label for='inputEmail3' class='col-sm-2 control-label'>Location Detail<?php echo form_error('location_det_id') ?></label>
 						<div class='col-sm-10' style="margin-bottom:10px;">
-						<?php echo select2_dinamis('location_det_id', 'location_detail', 'name','Location Detail','id',$location_det_id,['id_location' => $id_location]) ?>
+						<?php echo select2_dinamis('location_det_id', 'location_detail', 'name','Location Detail','id',$location_det_id,['id_location' => $id_location], ['required' => 'required']) ?>
 						</div>
 					</div>
 

@@ -17,10 +17,16 @@ function cmb_dinamis($name,$table,$field,$pk,$selected=null,$order=null){
     return $cmb;  
 }
 
-function select2_dinamis($name,$table,$field,$placeholder,$id,$value=null,$where=null){
+function select2_dinamis($name,$table,$field,$placeholder,$id,$value=null,$where=null, $additional_attributes = []){
     $ci = get_instance();
+
+    // Convert additional attributes to a string
+    $attr_string = '';
+    foreach ($additional_attributes as $key => $val) {
+        $attr_string .= ' ' . $key . '="' . $val . '"';
+    }    
     $select2 = '<select id="'.$name.'" name="'.$name.'" class="form-control select2 select2-hidden-accessible"  
-               data-placeholder="'.$placeholder.'" style="width: 100%;" tabindex="-1" aria-hidden="true">
+               data-placeholder="'.$placeholder.'" style="width: 100%;" tabindex="-1" aria-hidden="true"' . $attr_string . '>
                <option value=""></option>';
     if($where)
         $ci->db->where($where);
