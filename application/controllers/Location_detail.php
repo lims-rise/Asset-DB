@@ -78,7 +78,6 @@ class Location_detail extends CI_Controller
             $this->create();
         } else {
             $data = array(
-		'category_id' => $this->input->post('category_id',TRUE),
 		'name' => $this->input->post('name',TRUE),
 		'status' => 1,
 		'created_at' => date('Y-m-d H:i:s'),
